@@ -8,7 +8,6 @@ import Login from "./Login/Login";
 import ResultsPage from "./Results/ResultsPage";
 import AboutPage from "./About/About";
 import ContactPage from "./Contact/Contact";
-// import DanceStyles from "./DanceStyles/DanceStyles";
 import BreakingInfo from "./DanceStyles/BreakingInfo";
 import HipHopInfo from "./DanceStyles/HipHopInfo";
 import HouseInfo from "./DanceStyles/HouseInfo";
