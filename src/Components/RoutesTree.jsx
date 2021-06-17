@@ -18,6 +18,9 @@ import WaackingInfo from "./DanceStyles/WaackingInfo";
 import FindEvents from "./EventComponents/FindEvents";
 import RecentEvents from "./EventComponents/RecentEvents";
 import SubmitEventInfo from "./EventComponents/SubmitEventInfo";
+import EventPageMain from "../Pages/EventPageMain";
+import EventInstanceSubmit from "./EventComponents/EventInstanceSubmit";
+import SubmitVideo from "./EventComponents/SubmitVideo";
 
 const RoutesTree = () => {
   return (
@@ -38,10 +41,7 @@ const RoutesTree = () => {
         <Route path="/contact">
           <ContactPage />
         </Route>
-        {/* do we want a dance styles page at all? kinda seems unecessary since we have the hover dropdown */}
-        {/* <Route path="/styles">
-          <DanceStyles />
-        </Route> */}
+        {/* dance styles routes */}
         <Route path={`/hip-hop`}>
           <HipHopInfo />
         </Route>
@@ -64,7 +64,7 @@ const RoutesTree = () => {
           <LockingInfo />
         </Route>
 
-        {/* event tab links */}
+        {/* routes for event tab links */}
         <Route path={`/find_events`}>
           <FindEvents />
         </Route>
@@ -75,6 +75,16 @@ const RoutesTree = () => {
           <SubmitEventInfo />
         </Route>
 
+        {/* eventPage + eventSubmit + submitVideo routes */}
+        <Route path={`/event_page/:event_id`}>
+          <EventPageMain />
+        </Route>
+        <Route path={`/event_page/:event_id/event_instance_submit`}>
+          <EventInstanceSubmit />
+        </Route>
+        <Route path={`/event_page/:event_id/submit_video`}>
+          <SubmitVideo />
+        </Route>
         <Route path="/">
           <Home />
         </Route>
