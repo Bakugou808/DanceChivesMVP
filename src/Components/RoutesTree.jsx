@@ -17,10 +17,13 @@ import VogueingInfo from "./DanceStyles/VogueingInfo";
 import WaackingInfo from "./DanceStyles/WaackingInfo";
 import FindEvents from "./EventComponents/FindEvents";
 import RecentEvents from "./EventComponents/RecentEvents";
-import SubmitEventInfo from "./EventComponents/SubmitEventInfo";
-import EventPageMain from "../Pages/EventPageMain";
-import EventInstanceSubmit from "./EventComponents/EventInstanceSubmit";
+import EventPage from "../Pages/EventPage";
 import SubmitVideo from "./EventComponents/SubmitVideo";
+import SubmitEventPage from "./EventComponents/SubmitEventPage";
+import EventInstancePage from "../Pages/EventInstancePage";
+import SubmitEventInstancePage from "./EventComponents/SubmitEventInstancePage";
+import Video from "../Pages/Video";
+import SubmitVideoPage from "./EventComponents/SubmitVideoPage";
 
 const RoutesTree = () => {
   return (
@@ -71,19 +74,30 @@ const RoutesTree = () => {
         <Route path={`/recent_events`}>
           <RecentEvents />
         </Route>
-        <Route path={`/submit_event_info`}>
-          <SubmitEventInfo />
-        </Route>
+        {/* !!! change this path on the link to 'events/submit' */}
+        {/* <Route path={`/submit_event_info`}>
+          <SubmitEventInfo /> 
+        </Route> */}
 
         {/* eventPage + eventSubmit + submitVideo routes */}
-        <Route path={`/event_page/:event_id`}>
-          <EventPageMain />
+        {/* we have: video component ---  need: video page, functionality for recent feeds, search options (homepage), event instance page, event submit page,   */}
+        <Route path={`/events/:event_id`}>
+          <EventPage />
         </Route>
-        <Route path={`/event_page/:event_id/event_instance_submit`}>
-          <EventInstanceSubmit />
+        <Route exact path={`/events/submit`}>
+          <SubmitEventPage />
         </Route>
-        <Route path={`/event_page/:event_id/submit_video`}>
-          <SubmitVideo />
+        <Route exact path={`/events/:event_id/event_instance_submit`}>
+          <SubmitEventInstancePage />
+        </Route>
+        <Route path={`/events/:event_id/:event_instance_id`}>
+          <EventInstancePage />
+        </Route>
+        <Route path={`/events/:event_id/:event_instance_id/submit_video`}>
+          <SubmitVideoPage />
+        </Route>
+        <Route path={`/events/:event_id/:event_instance_id/video/:video_id`}>
+          <Video />
         </Route>
         <Route path="/">
           <Home />
