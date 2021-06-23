@@ -2,28 +2,22 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 // * Component Imports
-import Home from "./Home/Home";
-import Signup from "./Signup/Signup";
-import Login from "./Login/Login";
-import ResultsPage from "./Results/ResultsPage";
-import AboutPage from "./About/About";
-import ContactPage from "./Contact/Contact";
-import BreakingInfo from "./DanceStyles/BreakingInfo";
-import HipHopInfo from "./DanceStyles/HipHopInfo";
-import HouseInfo from "./DanceStyles/HouseInfo";
-import LockingInfo from "./DanceStyles/LockingInfo";
-import PoppingInfo from "./DanceStyles/PoppingInfo";
-import VogueingInfo from "./DanceStyles/VogueingInfo";
-import WaackingInfo from "./DanceStyles/WaackingInfo";
+import Home from "./Pages/Home";
+import Signup from "./Pages/Signup";
+import Login from "./Pages/Login";
+import ResultsPage from "./Pages/ResultsPage";
+import AboutPage from "./Pages/About";
+import ContactPage from "./Pages/Contact";
+
 import FindEvents from "./EventComponents/FindEvents";
 import RecentEvents from "./EventComponents/RecentEvents";
-import EventPage from "../Pages/EventPage";
-import SubmitVideo from "./EventComponents/SubmitVideo";
+import EventPage from "./Pages/EventPage";
 import SubmitEventPage from "./EventComponents/SubmitEventPage";
-import EventInstancePage from "../Pages/EventInstancePage";
+import EventInstancePage from "./Pages/EventInstancePage";
 import SubmitEventInstancePage from "./EventComponents/SubmitEventInstancePage";
-import Video from "../Pages/Video";
+import Video from "./Pages/Video";
 import SubmitVideoPage from "./EventComponents/SubmitVideoPage";
+import DanceStylesPage from "./Pages/DanceStylesPage";
 
 const RoutesTree = () => {
   return (
@@ -45,26 +39,9 @@ const RoutesTree = () => {
           <ContactPage />
         </Route>
         {/* dance styles routes */}
-        <Route path={`/hip-hop`}>
-          <HipHopInfo />
-        </Route>
-        <Route path={`/breaking`}>
-          <BreakingInfo />
-        </Route>
-        <Route path={`/popping`}>
-          <PoppingInfo />
-        </Route>
-        <Route path={`/house`}>
-          <HouseInfo />
-        </Route>
-        <Route path={`/waacking`}>
-          <WaackingInfo />
-        </Route>
-        <Route path={`/vogueing`}>
-          <VogueingInfo />
-        </Route>
-        <Route path={`/locking`}>
-          <LockingInfo />
+        {/* create nested routes for styles dynamic slug */}
+        <Route path="/styles/:style">
+          <DanceStylesPage />
         </Route>
 
         {/* routes for event tab links */}
@@ -74,31 +51,29 @@ const RoutesTree = () => {
         <Route path={`/recent_events`}>
           <RecentEvents />
         </Route>
-        {/* !!! change this path on the link to 'events/submit' */}
-        {/* <Route path={`/submit_event_info`}>
-          <SubmitEventInfo /> 
-        </Route> */}
 
         {/* eventPage + eventSubmit + submitVideo routes */}
         {/* we have: video component ---  need: video page, functionality for recent feeds, search options (homepage), event instance page, event submit page,   */}
-        <Route path={`/events/:event_id`}>
-          <EventPage />
-        </Route>
         <Route exact path={`/events/submit`}>
           <SubmitEventPage />
         </Route>
         <Route exact path={`/events/:event_id/event_instance_submit`}>
           <SubmitEventInstancePage />
         </Route>
+        <Route path={`/events/:event_id`}>
+          <EventPage />
+        </Route>
         <Route path={`/events/:event_id/:event_instance_id`}>
           <EventInstancePage />
         </Route>
-        <Route path={`/events/:event_id/:event_instance_id/submit_video`}>
+        <Route exact path={`/events/:event_id/:event_instance_id/submit_video`}>
           <SubmitVideoPage />
         </Route>
         <Route path={`/events/:event_id/:event_instance_id/video/:video_id`}>
           <Video />
         </Route>
+
+        {/* home page */}
         <Route path="/">
           <Home />
         </Route>
