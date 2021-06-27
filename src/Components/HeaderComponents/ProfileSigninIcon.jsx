@@ -7,7 +7,7 @@ import {
     // useParams,
     // useRouteMatch,
 } from 'react-router-dom';
-import firebase from '../../../utils/firebase';
+import firebase from '../../utils/firebase';
 
 const ProfileSigninIcon = (props) => {
     let history = useHistory();
@@ -50,12 +50,6 @@ const ProfileSigninIcon = (props) => {
     };
     return (
         <div>
-            <figure class="image is-64x64">
-                <img
-                    class="is-rounded"
-                    src="https://bulma.io/images/placeholders/128x128.png"
-                />
-            </figure>
             {userName}
 
             <div id="signedinout">
