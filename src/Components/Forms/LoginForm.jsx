@@ -12,21 +12,16 @@ const LoginForm = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const SignIn = (evt) => {
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                // Signed in
-                var user = userCredential.user;
-                // ...
-
-                history.push('/');
-            })
-            .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-            });
+    const SignIn = async (evt) => {
+        try{
+            let userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+            // Signed in
+            var user = userCredential.user;
+            // ...
+            history.push('/');
+        } catch(error){
+            console.log(error);
+        }    
     };
 
     return (

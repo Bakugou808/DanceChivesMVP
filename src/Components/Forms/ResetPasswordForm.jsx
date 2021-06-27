@@ -11,20 +11,18 @@ const ResetPasswordForm = (props) => {
     // Declare a new state variable, which we'll call "count"
     const [email, setEmail] = useState('');
 
-    const resetPassword = () => {
-        firebase
-            .auth()
-            .sendPasswordResetEmail(email)
-            .then(() => {
-                // Password reset email sent!
-                // ..
-                console.log('Password reset email sent!');
-            })
-            .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                // ..
-            });
+    const resetPassword = async (evt) => {
+
+        try {
+          let passwordResetEmail = await firebase.auth().sendPasswordResetEmail(email);
+            // Password reset email sent!
+            // ..
+             console.log('Password reset email sent!');
+
+        } catch(error) {
+            console.log(error);
+        }
+   
     };
 
     return (

@@ -7,7 +7,7 @@ import Header from "./Components/SharedComponents/HeaderComponents/Header";
 import NavBar from "./Components/SharedComponents/NavBarComponents/NavBar";
 import Footer from "./Components/SharedComponents/Footer";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <Header />
