@@ -15,7 +15,7 @@ const ProfileSigninIcon = (props) => {
     const { userName } = props;
     const [loggedInUser, setLoggedInUser] = useState(null);
     useEffect(() => {
-        firebase.auth().onAuthStateChanged(function (user) {
+        firebase.auth().onAuthStateChanged( (user) => {
             if (user) {
                 console.log(user);
                 // User is signed in.
@@ -30,18 +30,15 @@ const ProfileSigninIcon = (props) => {
         });
     });
 
-    const signOut = () => {
-        firebase
-            .auth()
-            .signOut()
-            .then(() => {
-                // Sign-out successful.
-                console.log('You are now signed out.');
-                history.push('/login');
-            })
-            .catch((error) => {
-                // An error happened.
-            });
+    const signOut = async () => {
+        try{
+            await firebase.auth().signOut()
+            // Sign-out successful.
+            console.log('You are now signed out.');
+            history.push('/login');
+        } catch(error){
+            console.log(error);
+        }
     };
 
     const Login = () => {

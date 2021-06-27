@@ -13,66 +13,55 @@ const SignupForm = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const Signup = (evt) => {
-        const db = firebase.firestore();
-        evt.preventDefault();
+    const Signup = async (evt) => {
+        try{
+            const db = firebase.firestore();
+            evt.preventDefault();
 
-        if (email && username && password) {
-            firebase
-                .auth()
-                .createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Add a new document with a generated id.
+            if (email && username && password) {
+                let userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+                    
+                // Add a new document with a generated id.
+                console.log(userCredential);
+                let docRef = await db.collection('users')
+                    .add({
+                        id: userCredential.user.uid,
+                        avatar: '',
+                        description: '',
+                        tags: [],
+                        type: 'user',
+                        username: username,
+                        email: email,
+                    })
 
-                    console.log(userCredential);
-                    db.collection('users')
-                        .add({
-                            id: userCredential.user.uid,
-                            avatar: '',
-                            description: '',
-                            tags: [],
-                            type: 'user',
-                            username: username,
-                            email: email,
-                        })
-                        .then((docRef) => {
-                            console.log(
-                                'Document written with ID: ',
-                                docRef.id
-                            );
+                    console.log(
+                        'Document written with ID: ',
+                        docRef.id
+                    );
 
-                            firebase.auth().onAuthStateChanged(function (user) {
-                                if (user) {
-                                    // User is signed in.
-                                    console.log(user);
-                                    user.updateProfile({
-                                        displayName: username,
-                                    })
-                                        .then(function () {
-                                            // Update successful.
-                                            // Signed in
+                    firebase.auth().onAuthStateChanged( async (user) => {
+                        if (user) {
+                            // User is signed in.
+                            console.log(user);
+                            await user.updateProfile({ displayName: username })
+                            // Update successful.
+                            // Signed in
 
-                                            console.log(userCredential);
-                                            // ...
-                                            history.push('/');
-                                            history.go(0); //Will likely need a cleaner way to refresh the user state
-                                        })
-                                        .catch(function (error) {
-                                            // An error happened.
-                                        });
-                                } else {
-                                    // No user is signed in.
-                                }
-                            });
-                        })
-                        .catch((error) => {
-                            console.error('Error adding document: ', error);
-                        });
-                })
-                .catch((error) => console.log(error));
-        } else {
-            //Validations
-            alert('Invalid credentials, please ensure all fields are filled');
+                            console.log(userCredential);
+                            // ...
+                            history.push('/');
+                            history.go(0); //Will likely need a cleaner way to refresh the user state
+
+                        } else {
+                            // No user is signed in.
+                        }
+                    });
+            } else {
+                //Validations
+                alert('Invalid credentials, please ensure all fields are filled');
+            }
+        } catch(error){
+            console.log(error);
         }
     };
 
