@@ -30,11 +30,11 @@ const LoginForm = (props) => {
     };
 
     return (
-        <div className="loginForm-cont container">
+        <div className="loginForm-cont container is-max-desktop">
             <div className="field">
                 <p className="control has-icons-left has-icons-right">
                     <input
-                        className="input"
+                        className="input is-small"
                         type="email"
                         placeholder="Email"
                         value={email}
@@ -51,7 +51,7 @@ const LoginForm = (props) => {
             <div className="field">
                 <p className="control has-icons-left">
                     <input
-                        className="input"
+                        className="input is-small"
                         type="password"
                         placeholder="Password"
                         value={password}
