@@ -7,6 +7,8 @@ const DanceStylesPage = (props) => {
   const [styleData, setStyleData] = useState(null);
   let { style } = useParams();
 
+  console.log(style);
+  
   useEffect(() => {
     style && grabStyleFromUrl(style);
   }, [style]);

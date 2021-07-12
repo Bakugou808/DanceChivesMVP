@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import Home from './Pages/Home';
 import Signup from './Pages/Signup';
 import Login from './Pages/Login';
+import UserProfile from './Pages/UserProfile';
 import ResultsPage from './Pages/ResultsPage';
 import AboutPage from './Pages/About';
 import ContactPage from './Pages/Contact';
@@ -29,6 +30,9 @@ const RoutesTree = () => {
                 </Route>
                 <Route path="/login">
                     <Login />
+                </Route>
+                <Route path="/userprofile">
+                    <UserProfile />
                 </Route>
                 <Route path="/resetpassword">
                     <ResetPassword />
@@ -64,7 +68,7 @@ const RoutesTree = () => {
                 <Route exact path={`/events/:event_id/event_instance_submit`}>
                     <SubmitEventInstancePage />
                 </Route>
-                <Route path={`/events/:event_id`}>
+                <Route path={`/events/:eventID`}>
                     <EventPage />
                 </Route>
                 <Route path={`/events/:event_id/:event_instance_id`}>
