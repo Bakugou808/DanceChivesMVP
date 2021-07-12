@@ -7,8 +7,6 @@ import { Link } from 'react-router-dom';
 
 const SignupForm = (props) => {
     const history = useHistory();
-
-    // Declare a new state variable, which we'll call "count"
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -16,13 +14,14 @@ const SignupForm = (props) => {
     const Signup = async (evt) => {
         try{
             const db = firebase.firestore();
-            evt.preventDefault();
-
+            // evt.preventDefault();
+            
             if (email && username && password) {
                 let userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
                     
                 // Add a new document with a generated id.
                 console.log(userCredential);
+
                 let docRef = await db.collection('users')
                     .add({
                         id: userCredential.user.uid,

@@ -4,7 +4,7 @@ const SearchBar = () => {
   return (
     <div>
       <input
-        class="input is-rounded"
+        className="input is-rounded"
         type="text"
         placeholder="Just an input box"
       />

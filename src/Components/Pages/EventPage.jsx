@@ -6,16 +6,13 @@ import {
   Route,
   useHistory,
 } from "react-router-dom";
+import firebase from '../../utils/firebase';
 
 const EventPage = (props) => {
   const [eventData, setEventData] = useState(null);
   let { eventID } = useParams();
   let { params } = useRouteMatch();
   const history = useHistory();
-
-  useEffect(() => {
-    eventID && grabEventIDFromUrl(eventID);
-  }, [eventID]);
 
   const grabEventIDFromUrl = (eventID) => {
     // do the firestore stuff save it to a variable (state hook)
@@ -28,6 +25,27 @@ const EventPage = (props) => {
     e.preventDefault();
     history.push(`${params.event_id}/event_instance_submit`);
   };
+
+  const getEvent = async (e) => {
+    const db = firebase.firestore();
+
+    let doc = await db.collection('events').doc(eventID).get();
+
+    if(doc.exists){
+      console.log(doc.data());
+    } else{
+      throw new Error('Could not get document for ' + eventID);
+    }
+  }
+
+  useEffect(() => {
+    eventID && grabEventIDFromUrl(eventID);
+  }, [eventID]);
+
+  getEvent()
+  .catch((error) => {
+    console.log(error);
+  });
 
   return (
     <div>

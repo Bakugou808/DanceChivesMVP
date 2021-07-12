@@ -47,9 +47,9 @@ const ProfileSigninIcon = (props) => {
     };
     return (
         <div>
-            <figure class="image is-64x64">
+            <figure className="image is-64x64">
                 <img
-                    class="is-rounded"
+                    className="is-rounded"
                     src="https://bulma.io/images/placeholders/128x128.png"
                 />
             </figure>
