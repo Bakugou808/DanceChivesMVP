@@ -15,7 +15,7 @@ const ProfileSigninIcon = (props) => {
     const { userName } = props;
     const [loggedInUser, setLoggedInUser] = useState(null);
     useEffect(() => {
-        firebase.auth().onAuthStateChanged( (user) => {
+        firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 console.log(user);
                 // User is signed in.
@@ -31,12 +31,12 @@ const ProfileSigninIcon = (props) => {
     });
 
     const signOut = async () => {
-        try{
-            await firebase.auth().signOut()
+        try {
+            await firebase.auth().signOut();
             // Sign-out successful.
             console.log('You are now signed out.');
             history.push('/login');
-        } catch(error){
+        } catch (error) {
             console.log(error);
         }
     };
@@ -53,7 +53,11 @@ const ProfileSigninIcon = (props) => {
                     src="https://bulma.io/images/placeholders/128x128.png"
                 />
             </figure>
-            {userName}
+            {/* {userName} */}
+
+            <div id="username">
+                {loggedInUser ? loggedInUser : <p>Guest</p>}
+            </div>
 
             <div id="signedinout">
                 {loggedInUser ? (
@@ -61,9 +65,6 @@ const ProfileSigninIcon = (props) => {
                 ) : (
                     <button onClick={Login}>Sign In</button>
                 )}
-            </div>
-            <div id="username">
-                {loggedInUser ? loggedInUser : <p>Guest</p>}
             </div>
         </div>
     );
