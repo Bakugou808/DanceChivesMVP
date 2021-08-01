@@ -31,7 +31,7 @@ const RoutesTree = () => {
                 <Route path="/login">
                     <Login />
                 </Route>
-                <Route path="/userprofile">
+                <Route path="/userprofile/:userID">
                     <UserProfile />
                 </Route>
                 <Route path="/resetpassword">
