@@ -14,9 +14,8 @@ const Header = () => {
                 alt="DC letters in blue and green"
             />
             <h3>DANCE CHIVES!</h3>
-            <Link style={{ color: 'inherit' }} to="/userprofile">
-                <ProfileSigninIcon />
-            </Link>
+
+            <ProfileSigninIcon />
 
             {/* </div> */}
         </div>

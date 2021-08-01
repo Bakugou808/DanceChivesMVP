@@ -47,12 +47,14 @@ const ProfileSigninIcon = (props) => {
     };
     return (
         <div>
-            <figure className="image is-64x64">
-                <img
-                    className="is-rounded"
-                    src="https://bulma.io/images/placeholders/128x128.png"
-                />
-            </figure>
+            <Link style={{ color: 'inherit' }} to="/userprofile">
+                <figure className="image is-64x64">
+                    <img
+                        className="is-rounded"
+                        src="https://bulma.io/images/placeholders/128x128.png"
+                    />
+                </figure>
+            </Link>
             {/* {userName} */}
 
             <div id="username">
