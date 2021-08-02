@@ -14,16 +14,9 @@ const EventPage = (props) => {
   let { params } = useRouteMatch();
   const history = useHistory();
 
-  const grabEventIDFromUrl = (eventID) => {
-    // do the firestore stuff save it to a variable (state hook)
-    let eventInfo = eventID;
-
-    setEventData(eventInfo);
-  };
-
   const submitEventInstance = (e) => {
     e.preventDefault();
-    history.push(`${params.event_id}/event_instance_submit`);
+    history.push(`${eventID}/event_instance_submit`);
   };
 
   const getEvent = async (e) => {
@@ -32,25 +25,32 @@ const EventPage = (props) => {
     let doc = await db.collection('events').doc(eventID).get();
 
     if(doc.exists){
-      console.log(doc.data());
+
+      setEventData(doc.data());
+
     } else{
       throw new Error('Could not get document for ' + eventID);
     }
   }
 
   useEffect(() => {
-    eventID && grabEventIDFromUrl(eventID);
+    
+    if(eventID){
+      getEvent()
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+  
+
   }, [eventID]);
-
-  getEvent()
-  .catch((error) => {
-    console.log(error);
-  });
-
+  
+  //TODO change workaround to prevent it from rendering while it's null
   return (
     <div>
       Event Page Container
-      <h2>{eventData && eventData} </h2>
+      <h2>{eventData ? eventData.title : "LOADING..."}</h2>
+      <h2>{eventData ? eventData.city : "LOADING..."}</h2>
       <button onClick={submitEventInstance}>add event Instance</button>
     </div>
   );
