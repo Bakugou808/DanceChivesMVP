@@ -7,9 +7,11 @@ import {
   useHistory,
 } from "react-router-dom";
 import firebase from '../../utils/firebase';
+import Page404 from './404'
 
 const EventPage = (props) => {
   const [eventData, setEventData] = useState(null);
+  const [found, setFound] = useState(null)
   let { eventID } = useParams();
   let { params } = useRouteMatch();
   const history = useHistory();
@@ -27,32 +29,36 @@ const EventPage = (props) => {
     if(doc.exists){
 
       setEventData(doc.data());
+      return true;
 
-    } else{
-      throw new Error('Could not get document for ' + eventID);
-    }
+    } 
+    
+    return false;
   }
 
-  useEffect(() => {
+  useEffect( async () => {
     
     if(eventID){
-      getEvent()
-      .catch((error) => {
-        console.log(error);
-      });
+      setFound(await getEvent());
     }
-  
-
+    
   }, [eventID]);
   
   //TODO change workaround to prevent it from rendering while it's null
   return (
     <div>
       Event Page Container
-      <h2>{eventData ? eventData.title : "LOADING..."}</h2>
-      <h2>{eventData ? eventData.city : "LOADING..."}</h2>
-      <button onClick={submitEventInstance}>add event Instance</button>
-    </div>
+      <br/>
+      {found ? 
+         (eventData ? 
+          <div> 
+            <h2>{eventData.title}</h2>
+            <h2>{eventData.city}</h2>
+            <button onClick={submitEventInstance}>add event Instance</button>
+          </div> : <div>"Loading..."<br/></div>)  :
+          <Page404 item="event"/>
+      }
+    </div> 
   );
 };
 
