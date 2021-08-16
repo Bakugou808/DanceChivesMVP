@@ -47,7 +47,10 @@ const ProfileSigninIcon = (props) => {
     };
     return (
         <div>
-            <Link style={{ color: 'inherit' }} to="/userprofile">
+            <Link
+                style={{ color: 'inherit' }}
+                to={`/userprofile/${loggedInUser}`}
+            >
                 <figure className="image is-64x64">
                     <img
                         className="is-rounded"

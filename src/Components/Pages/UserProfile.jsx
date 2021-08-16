@@ -11,7 +11,7 @@ import firebase from 'firebase';
 import '../../CSS/UserProfile.css';
 const UserProfile = () => {
     const [userData, setUserData] = useState(null);
-    let { userID } = firebase.auth().currentUser.uid;
+    let { userID } = useParams();
     let { params } = useRouteMatch();
     const history = useHistory();
 
@@ -26,6 +26,7 @@ const UserProfile = () => {
 
         if (doc.exists) {
             console.log(doc.data());
+            setUserData(doc.data());
         } else {
             throw new Error('Could not get document for ' + userID);
         }
@@ -51,7 +52,13 @@ const UserProfile = () => {
                             </figure>
                         </div>
                         <div className="media-content">
-                            <p className="title is-4">John Smith</p>
+                            <p className="title is-4">
+                                {userData
+                                    ? userData.firstname +
+                                      ' ' +
+                                      userData.lastname
+                                    : ''}
+                            </p>
                         </div>
                     </div>
 
@@ -60,7 +67,6 @@ const UserProfile = () => {
                         <a href="#"> #ownedtag</a>
                         <br />
                         <ul>
-                            {userID}
                             <a href="#">
                                 <li>Wins</li>
                             </a>
