@@ -26,8 +26,7 @@ const SignupForm = (props) => {
                 // Add a new document with a generated id.
                 console.log(userCredential);
 
-                let docRef = await db.collection('users').add({
-                    id: userCredential.user.uid,
+                let docRef = await db.collection('users').doc(username).set({
                     firstname: firstname,
                     lastname: lastname,
                     email: email,
@@ -38,13 +37,14 @@ const SignupForm = (props) => {
                     type: 'user',
                 });
 
-                console.log('Document written with ID: ', docRef.id);
+                console.log('Document written');
 
-                firebase.auth().onAuthStateChanged(async (user) => {
+                //Careful using async on AuthStateChange can delay effects
+                firebase.auth().onAuthStateChanged((user) => {
                     if (user) {
                         // User is signed in.
                         console.log(user);
-                        await user.updateProfile({ displayName: username });
+                        user.updateProfile({ displayName: username });
                         // Update successful.
                         // Signed in
 
