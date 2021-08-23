@@ -38,6 +38,8 @@ const EventPage = (props) => {
 
   useEffect( async () => {
     
+    console.log(eventID);
+    
     if(eventID){
       setFound(await getEvent());
     }
