@@ -11,7 +11,7 @@ import Page404 from './404'
 
 const EventPage = (props) => {
   const [eventData, setEventData] = useState(null);
-  const [found, setFound] = useState(null)
+  const [found, setFound] = useState(null);
   let { eventID } = useParams();
   let { params } = useRouteMatch();
   const history = useHistory();
@@ -37,6 +37,8 @@ const EventPage = (props) => {
   }
 
   useEffect( async () => {
+    
+    console.log(eventID);
     
     if(eventID){
       setFound(await getEvent());

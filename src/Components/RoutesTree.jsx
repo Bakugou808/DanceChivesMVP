@@ -65,23 +65,23 @@ const RoutesTree = () => {
                 <Route exact path={`/events/submit`}>
                     <SubmitEventPage />
                 </Route>
-                <Route exact path={`/events/:event_id/event_instance_submit`}>
+                <Route exact path={`/events/:eventID/event_instance_submit`}>
                     <SubmitEventInstancePage />
                 </Route>
                 <Route path={`/events/:eventID`}>
                     <EventPage />
                 </Route>
-                <Route path={`/events/:event_id/:event_instance_id`}>
+                <Route path={`/events/:eventID/:event_instance_id`}>
                     <EventInstancePage />
                 </Route>
                 <Route
                     exact
-                    path={`/events/:event_id/:event_instance_id/submit_video`}
+                    path={`/events/:eventID/:event_instance_id/submit_video`}
                 >
                     <SubmitVideoPage />
                 </Route>
                 <Route
-                    path={`/events/:event_id/:event_instance_id/video/:video_id`}
+                    path={`/events/:eventID/:event_instance_id/video/:video_id`}
                 >
                     <Video />
                 </Route>

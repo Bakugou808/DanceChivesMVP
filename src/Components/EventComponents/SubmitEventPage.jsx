@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
 import firebase from '../../utils/firebase';
+import ImageUpload from '../../utils/ImageUpload'
 
 
 
@@ -8,15 +9,18 @@ const SubmitEventPage = (props) => {
   const history = useHistory();
   const [title, setTitle] = useState('');
   const [city, setCity] = useState('');
+  const [organizer, setOrganizer] = useState('')
+  const [eventBanner, setEventBanner] = useState(null)
 
   const CreateEvent = async (evt) => {
     try{
       const db = firebase.firestore();
 
-      if(title && city){
+      if(title && city && organizer){
           let docRef = await db.collection('events')
           .add({
               title: title,
+              organizer: organizer,
               city: city
           })
 
@@ -29,24 +33,11 @@ const SubmitEventPage = (props) => {
     } catch(error){
       console.log(error);
     }
-      // firebase
-      //     .auth()
-      //     .signInWithEmailAndPassword(email, password)
-      //     .then((userCredential) => {
-      //         // Signed in
-      //         var user = userCredential.user;
-      //         // ...
-
-      //         history.push('/');
-      //     })
-      //     .catch((error) => {
-      //         var errorCode = error.code;
-      //         var errorMessage = error.message;
-      //     });
   };
 
   return (
     <div className="loginForm-cont container is-max-desktop">
+
             <div className="field">
                 <p className="control has-icons-left has-icons-right">
                     <input
@@ -69,6 +60,20 @@ const SubmitEventPage = (props) => {
                     <input
                         className="input is-small"
                         type="text"
+                        placeholder="Organizer"
+                        value = {city}
+                        onChange={(e) => setOrganizer(e.target.value)}
+                    />
+                    <span className="icon is-small is-left">
+                        <i className="fas fa-lock"></i>
+                    </span>
+                </p>
+            </div>
+            <div className="field">
+                <p className="control has-icons-left">
+                    <input
+                        className="input is-small"
+                        type="text"
                         placeholder="Event Location"
                         value = {city}
                         onChange={(e) => setCity(e.target.value)}
@@ -78,6 +83,9 @@ const SubmitEventPage = (props) => {
                     </span>
                 </p>
             </div>
+            <div className="field"> 
+                <ImageUpload />
+            <div/>
             <div className="field">
                 <p className="control">
                     <button className="button is-success" onClick={CreateEvent}>
@@ -86,6 +94,7 @@ const SubmitEventPage = (props) => {
                 </p>
             </div>
         </div>
+    </div>
   );
 };
 
