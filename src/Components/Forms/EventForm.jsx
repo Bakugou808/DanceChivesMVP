@@ -1,53 +1,76 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-// import "../../CSS/LoginForm.css";
-
 import firebase from "../../utils/firebase";
+import ImageUpload from '../../utils/ImageUpload';
 
-const EventForm = (props) => {
+const EventForm = () => {
   const history = useHistory();
-
   // Declare a new state variable, which we'll call "count"
-  const [eventName, setEventName] = useState("");
-  const [submitData, handleSubmit] = useState("");
+  const [title, setTitle] = useState('');
+  const [location, setLocation] = useState('');  
+  const [organizer, setOrganizer] = useState('');
+  
+  const CreateEvent = async (evt) => {
+    try{
+      const db = firebase.firestore();
 
-  const onSubmit = (evt) => {
-    //   evt.preventDefault();
-      console.log(evt);
-      alert(`Submitting Name ${eventName}`)
-  }
+      if(title && location && organizer){
+          let docRef = await db.collection('events')
+          .add({
+                title, 
+                location, 
+                organizer, 
+          })
 
-//   const SignIn = (evt) => {
-//     firebase
-//       .auth()
-//       .signInWithEmailAndPassword(email, password)
-//       .then((userCredential) => {
-//         // Signed in
-//         var user = userCredential.user;
-//         // ...
+          console.log(
+              'Document written with ID: ',
+              docRef.id
+          );
+      }
 
-//         history.push("/");
-//       })
-//       .catch((error) => {
-//         var errorCode = error.code;
-//         var errorMessage = error.message;
-//       });
-//   };
+    } catch(error){
+      console.log(error);
+    }
+  };
 
   return (
     <div className="loginForm-cont container">
-      <form className="field" onSubmit={onSubmit}>
+      <form className="field">
           <input
             type="text"
             className="input"
-            placeholder="Event Name"
-            value={eventName}
-            onChange={(e) => setEventName(e.target.value)}
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
 
-          <input type="submit" value="Submit" className="button is-success" />
+          <input
+            type="text"
+            className="input"
+            placeholder="location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
 
+          <input 
+            type="text"
+            className="input"
+            placeholder="Organizer"
+            value={organizer}
+            onChange={(e) => setOrganizer(e.target.value)}
+          />
       </form>
+
+      <div className="field"> 
+          <ImageUpload />
+      </div>
+      <div className="field">
+          <p className="control">
+              <button className="button is-success" onClick={CreateEvent}>
+                  Submit
+              </button>
+          </p>
+      </div>
     </div>
   );
 };
