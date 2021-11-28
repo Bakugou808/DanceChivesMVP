@@ -10,7 +10,6 @@ import ResultsPage from './Pages/ResultsPage';
 import AboutPage from './Pages/About';
 import ContactPage from './Pages/Contact';
 import ResetPassword from './Pages/ResetPassword';
-
 import FindEvents from './EventComponents/FindEvents';
 import RecentEvents from './EventComponents/RecentEvents';
 import EventPage from './Pages/EventPage';
@@ -31,7 +30,7 @@ const RoutesTree = () => {
                 <Route path="/login">
                     <Login />
                 </Route>
-                <Route path="/userprofile/:userID">
+                <Route path="/userprofile/:userId">
                     <UserProfile />
                 </Route>
                 <Route path="/resetpassword">
@@ -53,10 +52,10 @@ const RoutesTree = () => {
                 </Route>
 
                 {/* routes for event tab links */}
-                <Route path={`/find_events`}>
+                <Route path={`/findEvents`}>
                     <FindEvents />
                 </Route>
-                <Route path={`/recent_events`}>
+                <Route path={`/recentEvents`}>
                     <RecentEvents />
                 </Route>
 
@@ -65,23 +64,23 @@ const RoutesTree = () => {
                 <Route exact path={`/events/submit`}>
                     <SubmitEventPage />
                 </Route>
-                <Route exact path={`/events/:eventID/event_instance_submit`}>
+                <Route exact path={`/events/:eventId/eventInstanceSubmit`}>
                     <SubmitEventInstancePage />
                 </Route>
-                <Route path={`/events/:eventID`}>
+                <Route exact path={`/events/:eventId`}>
                     <EventPage />
                 </Route>
-                <Route path={`/events/:eventID/:event_instance_id`}>
+                <Route exact path={`/events/:eventId/:eventInstanceId`}>
                     <EventInstancePage />
                 </Route>
                 <Route
                     exact
-                    path={`/events/:eventID/:event_instance_id/submit_video`}
+                    path={`/events/:eventId/:eventInstanceId/submitVideo`}
                 >
                     <SubmitVideoPage />
                 </Route>
                 <Route
-                    path={`/events/:eventID/:event_instance_id/video/:video_id`}
+                    path={`/events/:eventId/:eventInstanceId/video/:videoId`}
                 >
                     <Video />
                 </Route>

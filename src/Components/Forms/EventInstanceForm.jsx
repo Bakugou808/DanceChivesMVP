@@ -7,16 +7,16 @@ const EventInstanceForm = (props) => {
   const [city, setCity] = useState('');
   const [date, setDate] = useState('');
   const [organizer, setOrganizer] = useState('');
-  let { eventID } = useParams();
+  let { eventId } = useParams();
 
   const CreateEventInstance = async (evt) => {
     try{
       const db = firebase.firestore();
 
       if(title && city){
-          let docRef = await db.collection('event_instance')
+          let docRef = await db.collection('events').doc(eventId).collection('eventInstance')
           .add({
-              title: title,
+              eventName: title,
               city: city
           })
 
