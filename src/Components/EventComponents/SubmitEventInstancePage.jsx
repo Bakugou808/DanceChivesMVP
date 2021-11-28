@@ -15,13 +15,13 @@ import EventInstanceForm from "../Forms/EventInstanceForm";
 const SubmitEventInstancePage = (props) => {
   const history = useHistory();
   const [found, setFound] = useState(null);
-  let { eventID } = useParams();
+  let { eventId } = useParams();
   const [eventData, setEventData] = useState(null);
 
   const getEvent = async (e) => {
     const db = firebase.firestore();
 
-    let doc = await db.collection('events').doc(eventID).get();
+    let doc = await db.collection('events').doc(eventId).get();
 
     if(doc.exists){
 
@@ -34,9 +34,9 @@ const SubmitEventInstancePage = (props) => {
   }
 
   useEffect( async() => {
-    console.log(eventID);
+    console.log(eventId);
 
-    if(eventID){
+    if(eventId){
       setFound(await getEvent());
     }
 
@@ -44,7 +44,7 @@ const SubmitEventInstancePage = (props) => {
       
     }
 
-  }, [eventID]);
+  }, [eventId]);
 
   return (
     <div>

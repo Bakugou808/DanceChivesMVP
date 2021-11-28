@@ -12,22 +12,23 @@ import Page404 from './404'
 const EventPage = (props) => {
   const [eventData, setEventData] = useState(null);
   const [found, setFound] = useState(null);
-  let { eventID } = useParams();
-  let { params } = useRouteMatch();
+  let { eventId } = useParams();
   const history = useHistory();
 
   const submitEventInstance = (e) => {
     e.preventDefault();
-    history.push(`${eventID}/event_instance_submit`);
+    history.push(`${eventId}/eventInstanceSubmit`);
   };
 
   const getEvent = async (e) => {
     const db = firebase.firestore();
 
-    let doc = await db.collection('events').doc(eventID).get();
+    let doc = await db.collection('events').doc(eventId).get();
 
+    console.log(doc);
+    
     if(doc.exists){
-
+ 
       setEventData(doc.data());
       return true;
 
@@ -38,13 +39,13 @@ const EventPage = (props) => {
 
   useEffect( async () => {
     
-    console.log(eventID);
+    console.log(eventId);
     
-    if(eventID){
+    if(eventId){
       setFound(await getEvent());
     }
     
-  }, [eventID]);
+  }, [eventId]);
   
   //TODO change workaround to prevent it from rendering while it's null
   return (
