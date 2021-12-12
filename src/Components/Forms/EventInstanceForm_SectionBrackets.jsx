@@ -10,8 +10,10 @@ const EventInstanceForm_SectionBrackets = (props) => {
     const [showVideoSection, setShowVideoSection] = useState(false)
     const [videoState, updateVideoState] = useState({})
 
-    Style --> category --> bracket --> video 
-
+    Style {--> category } {--> bracket} --> video 
+            cat1   --->     {brack1
+            cat2           brack2}
+            cat3     -->   {}    etc
           cat1          brack1      vid1
 
            -->> category  ---> bracket
