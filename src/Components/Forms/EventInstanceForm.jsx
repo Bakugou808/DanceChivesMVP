@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+import EventInstanceForm_SectionGeneral from './EventInstanceForm_SectionGeneral'
+import EventInstanceForm_SectionStyles from './EventInstanceForm_SectionStyles'
+import EventInstanceForm_SectionCategories from './EventInstanceForm_SectionCategories'
+import EventInstanceForm_SectionBrackets from './EventInstanceForm_SectionBrackets'
+import EventInstanceForm_SectionVideos from './EventInstanceForm_SectionVideos'
+
 import firebase from '../../utils/firebase';
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -7,6 +13,36 @@ const EventInstanceForm = (props) => {
   const [city, setCity] = useState('');
   const [date, setDate] = useState('');
   const [organizer, setOrganizer] = useState('');
+
+    const [general, setGeneral] = useState({
+        title: '',
+        city: '',
+        date: '',
+        organizer: ''
+    })
+
+    const [styles, setStyles] = useState({
+        style: '',
+        dj: '',
+        judges: [],
+        organizer: ''
+    })
+
+    const [categories, setCategories] = useState({
+        category_name: ''
+    })
+
+    const [brackets, setBrackets] = useState({
+        bracket_name: ''
+    })
+
+    const [videos, setVideos] = useState({
+        link: ''
+    })
+
+
+
+
   let { eventId } = useParams();
 
   const CreateEventInstance = async (evt) => {
@@ -33,75 +69,8 @@ const EventInstanceForm = (props) => {
 
   return(
   <div className="loginForm-cont container is-max-desktop">
-    <div className="field">
-        <p className="control has-icons-left has-icons-right">
-            <input
-                className="input is-small"
-                type="text"
-                placeholder="Title"
-                value = {title}
-                onChange={(e) => setTitle(e.target.value)}
-            /> 
-            <span className="icon is-small is-left">
-                <i className="fas fa-envelope"></i>
-            </span>
-            <span className="icon is-small is-right">
-                <i className="fas fa-check"></i>
-            </span>
-        </p>
-    </div>
-    <div className="field">
-        <p className="control has-icons-left has-icons-right">
-            <input
-                className="input is-small"
-                type="text"
-                placeholder="Date"
-                value = {date}
-                onChange={(e) => setDate(e.target.value)}
-            /> 
-            <span className="icon is-small is-left">
-                <i className="fas fa-envelope"></i>
-            </span>
-            <span className="icon is-small is-right">
-                <i className="fas fa-check"></i>
-            </span>
-        </p>
-    </div>
-    <div className="field">
-        <p className="control has-icons-left">
-            <input
-                className="input is-small"
-                type="text"
-                placeholder="Event Location" 
-                value = {city}
-                onChange={(e) => setCity(e.target.value)}
-            />
-            <span className="icon is-small is-left">
-                <i className="fas fa-lock"></i>
-            </span>
-        </p>
-    </div>
-    <div className="field">
-        <p className="control has-icons-left">
-            <input
-                className="input is-small"
-                type="text"
-                placeholder="Organization" 
-                value = {organizer}
-                onChange={(e) => setOrganizer(e.target.value)}
-            />
-            <span className="icon is-small is-left">
-                <i className="fas fa-lock"></i>
-            </span>
-        </p>
-    </div>
-    <div className="field">
-        <p className="control">
-            <button className="button is-success" onClick={CreateEventInstance}>
-                Submit
-            </button>
-        </p>
-    </div>
+      <EventInstanceForm_SectionGeneral setGeneral={setGeneral}/>
+      
   </div>);
 };
 
