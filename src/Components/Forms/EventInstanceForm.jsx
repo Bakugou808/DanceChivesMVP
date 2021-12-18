@@ -1,9 +1,4 @@
 import React, { useState } from "react";
-import EventInstanceForm_SectionGeneral from './EventInstanceForm_SectionGeneral'
-import EventInstanceForm_SectionStyles from './EventInstanceForm_SectionStyles'
-import EventInstanceForm_SectionCategories from './EventInstanceForm_SectionCategories'
-import EventInstanceForm_SectionBrackets from './EventInstanceForm_SectionBrackets'
-import EventInstanceForm_SectionVideos from './EventInstanceForm_SectionVideos'
 
 import firebase from '../../utils/firebase';
 import { useParams, useHistory } from 'react-router-dom';
@@ -69,7 +64,7 @@ const EventInstanceForm = (props) => {
 
   return(
   <div className="loginForm-cont container is-max-desktop">
-      <EventInstanceForm_SectionGeneral setGeneral={setGeneral}/>
+      
       
   </div>);
 };
