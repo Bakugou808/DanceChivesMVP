@@ -19,8 +19,8 @@ const EventInstancePage = (props) => {
   let { eventId, eventInstanceId } = useParams();
   const history = useHistory();
   // state for event instance
-  const [selectedStyle, setSelectedStyle] = useState(null)
-
+  const [selectedData, setSelectedData] = useState(null)
+  const [selectedKey, setSelectedKey] = useState(null)
 
   const getEventInstance = async (e) => {
     const db = firebase.firestore();
@@ -42,10 +42,11 @@ const EventInstancePage = (props) => {
   }, [eventInstanceId]);
   
   const styleSelector = (key) => {
-    let selectedStyle = eventInstanceData.styles[key]
+    let selectedData = eventInstanceData.styles[key]
     
-    console.log(key, selectedStyle)
-    setSelectedStyle(selectedStyle)
+    console.log(key, selectedData)
+    setSelectedKey(key)
+    setSelectedData(selectedData)
   }
   
 
@@ -61,9 +62,10 @@ const EventInstancePage = (props) => {
   }
 
   const renderChildren = (params) => {
-    let children = Object.keys(selectedStyle)
-    debugger
-    return (<Viewport children={children} />)
+    let children = Object.keys(selectedData)
+    console.log(selectedData)
+    
+    return (<Viewport children={children} selectedKey={selectedKey} />)
   }
   
   
@@ -92,7 +94,7 @@ const EventInstancePage = (props) => {
               </section>
               <section className="section-3-viewport" >
                 <div className="viewport">
-                  {selectedStyle && renderChildren()}
+                  {selectedData && renderChildren()}
                 </div>
               </section>
           </div>
