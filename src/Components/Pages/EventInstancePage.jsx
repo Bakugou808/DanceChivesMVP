@@ -8,28 +8,28 @@ import {
 } from "react-router-dom";
 import firebase from '../../utils/firebase';
 import Page404 from './404'
+// related components for event instance
+import StyleCard from '../EventInstanceComponents/StyleCard'
+import Viewport from '../EventInstanceComponents/Viewport'
+
 
 const EventInstancePage = (props) => {
   const [eventInstanceData, setEventInstanceData] = useState(null);
   const [found, setFound] = useState(null);
   let { eventId, eventInstanceId } = useParams();
   const history = useHistory();
+  // state for event instance
+  const [selectedStyle, setSelectedStyle] = useState(null)
+
 
   const getEventInstance = async (e) => {
-
-    console.log("TRIGGERED");
-
     const db = firebase.firestore();
-
     let doc = await db.collection('events').doc(eventId).collection('eventInstance').doc(eventInstanceId).get();
 
     if(doc.exists){
-
       setEventInstanceData(doc.data());
       return true;
-
     }
-    
     return false;
   }
 
@@ -41,6 +41,32 @@ const EventInstancePage = (props) => {
     
   }, [eventInstanceId]);
   
+  const styleSelector = (key) => {
+    let selectedStyle = eventInstanceData.styles[key]
+    
+    console.log(key, selectedStyle)
+    setSelectedStyle(selectedStyle)
+  }
+  
+
+  const renderStyles = () => {
+    let styles = eventInstanceData.styles 
+    
+    return Object.entries(styles).map(([key, val]) => {
+      return (
+        <StyleCard key={key + 1} style={key} styleSelector={styleSelector}/>
+      )
+    })
+
+  }
+
+  const renderChildren = (params) => {
+    let children = Object.keys(selectedStyle)
+    debugger
+    return (<Viewport children={children} />)
+  }
+  
+  
   //TODO change workaround to prevent it from rendering while it's null
   return (
     <div>
@@ -48,10 +74,41 @@ const EventInstancePage = (props) => {
       <br/>
       {found ? 
          (eventInstanceData ? 
-          <div> 
-            <h2>{eventInstanceData.eventName}</h2>
-            <h2>{eventInstanceData.city}</h2>
-          </div> : <div>"Loading..."<br/></div>)  :
+          (
+          
+          <div className="ei-wrapper">
+              <section className="section-1">
+                <div className="ei-general-info">
+                  <h2>{eventInstanceData.eventName}</h2>
+                  <h2>{eventInstanceData.city}</h2>
+                </div>
+              </section> 
+              <section className="section-2">
+                <div className="root-node-children-container">
+                  <div className="list-component" >
+                    {eventInstanceData.styles && renderStyles()}
+                  </div>
+                </div>
+              </section>
+              <section className="section-3-viewport" >
+                <div className="viewport">
+                  {selectedStyle && renderChildren()}
+                </div>
+              </section>
+          </div>
+          
+          
+          
+          
+          
+          ) 
+          
+          
+          
+          
+          
+          
+          : <div>"Loading..."<br/></div>)  :
           <Page404 item="event"/>
       }
     </div> 
