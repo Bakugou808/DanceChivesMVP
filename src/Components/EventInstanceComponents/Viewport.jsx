@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const Viewport = ({children, selectedKey}) => {
+const Viewport = ({children, selectedKey, childSelector, breadcrumb}) => {
 
     useEffect(() => {
         console.log('children', children)
@@ -13,7 +13,7 @@ const Viewport = ({children, selectedKey}) => {
             return (
                 <div className="viewport-carousel">
                     {
-                        <div className='carousel-card card'>
+                        <div className='carousel-card card' onClick={()=>childSelector(child)}>
                             <h2 className='content'>{child}</h2>
                         </div>
                     }
@@ -21,12 +21,26 @@ const Viewport = ({children, selectedKey}) => {
             )
         })
     }
+
+    const renderBreadcrumb = () => {
+        return Object.entries(breadcrumb).map(([key, val]) => {
+            if (val){
+                return (
+                    <li>{key}-->{val}</li>
+                )
+            }
+        })
+    }
+    
     
 
 
     return (
         <div className='viewport-wrapper'>
-            <h2>{selectedKey}</h2>
+            <ul className='viewport-breadcrumbs'>
+                {breadcrumb && renderBreadcrumb()}
+            </ul>
+            
             <section className='viewport-carousel-wrapper' >
                 {children && renderChildren()}
             </section>

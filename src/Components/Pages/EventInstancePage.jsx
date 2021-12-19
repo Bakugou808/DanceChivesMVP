@@ -21,6 +21,7 @@ const EventInstancePage = (props) => {
   // state for event instance
   const [selectedData, setSelectedData] = useState(null)
   const [selectedKey, setSelectedKey] = useState(null)
+  const [breadcrumb, setBreadcrumb] = useState({style: '', category: '', bracket: ''})
 
   const getEventInstance = async (e) => {
     const db = firebase.firestore();
@@ -47,7 +48,20 @@ const EventInstancePage = (props) => {
     console.log(key, selectedData)
     setSelectedKey(key)
     setSelectedData(selectedData)
+    setBreadcrumb({style: `${key}`, category: '', bracket: ''})
   }
+
+  const childSelector = (child) => {
+
+    console.log(child)
+
+    setSelectedKey(child)
+    setSelectedData(selectedData[child])
+    setBreadcrumb((prev) => {
+      return {style: prev.style, category: child, bracket: ''}
+    })
+  }
+  
   
 
   const renderStyles = () => {
@@ -65,7 +79,7 @@ const EventInstancePage = (props) => {
     let children = Object.keys(selectedData)
     console.log(selectedData)
     
-    return (<Viewport children={children} selectedKey={selectedKey} />)
+    return (<Viewport children={children} selectedKey={selectedKey} breadcrumb={breadcrumb} childSelector={childSelector}/>)
   }
   
   
@@ -88,7 +102,7 @@ const EventInstancePage = (props) => {
               <section className="section-2">
                 <div className="root-node-children-container">
                   <div className="list-component" >
-                    {eventInstanceData.styles && renderStyles()}
+                    { renderStyles()}
                   </div>
                 </div>
               </section>
