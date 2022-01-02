@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const Viewport = ({children, selectedKey, childSelector, breadcrumb}) => {
+const Viewport = ({children, selectedKey, childSelector, breadcrumb, breadcrumbSelector}) => {
     
     useEffect(() => {
         console.log('children', children)
@@ -9,7 +9,6 @@ const Viewport = ({children, selectedKey, childSelector, breadcrumb}) => {
     const [showForm, setShowForm] = useState(false)
 
     const renderChildren = () => {
-
         //Skips the brackets/judges child selector
         if(children.includes("brackets") && children.includes("judges")){
             childSelector("brackets")
@@ -42,7 +41,9 @@ const Viewport = ({children, selectedKey, childSelector, breadcrumb}) => {
         return Object.entries(breadcrumb).map(([key, val]) => {
             if (val){
                 return (
-                    <li>{key}-->{val}</li>
+                    <li onClick={()=>{breadcrumbSelector(key); renderChildren()}}>
+                        {key}:{val}
+                    </li>
                 )
             }
         })

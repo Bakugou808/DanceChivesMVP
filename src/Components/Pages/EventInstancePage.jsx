@@ -62,6 +62,8 @@ const EventInstancePage = (props) => {
       return;
     }
 
+    setSelectedData(selectedData[child])
+
     if(selectedLevel == "style"){
       setSelectedLevel("category")
       setBreadcrumb((prev) => {
@@ -82,9 +84,37 @@ const EventInstancePage = (props) => {
       })
     }
 
-    setSelectedData(selectedData[child])
   }
   
+  const breadcrumbSelector = (level) => {
+
+    if(level == "style"){
+      setSelectedLevel("style")
+      setSelectedData(eventInstanceData.styles[breadcrumb.style]);
+
+      setBreadcrumb((prev) => {
+        return {style: prev.style, category: '', bracket: '', battle: ''}
+      })
+
+    } else if(level == "category"){
+      setSelectedLevel("category")
+      setSelectedData(eventInstanceData.styles[breadcrumb.style][breadcrumb.category]);
+
+      setBreadcrumb((prev) => {
+        return {style: prev.style, category: prev.category, bracket: '', battle: ''}
+      })
+
+    } else if(level == "bracket"){
+      setSelectedLevel("bracket")
+      setSelectedData(eventInstanceData.styles[breadcrumb.style][breadcrumb.category].brackets[breadcrumb.bracket]);
+
+      setBreadcrumb((prev) => {
+        return {style: prev.style, category: prev.category, bracket: prev.bracket, battle: ''}
+      })
+    }
+
+  }
+
   const renderStyles = () => {
     let styles = eventInstanceData.styles 
     
@@ -99,7 +129,7 @@ const EventInstancePage = (props) => {
   const renderChildren = (params) => {
     let children = Object.keys(selectedData)
     
-    return (<Viewport children={children} selectedLevel={selectedLevel} breadcrumb={breadcrumb} childSelector={childSelector}/>)
+    return (<Viewport children={children} selectedLevel={selectedLevel} breadcrumb={breadcrumb} childSelector={childSelector} breadcrumbSelector={breadcrumbSelector}/>)
   }
   
   
