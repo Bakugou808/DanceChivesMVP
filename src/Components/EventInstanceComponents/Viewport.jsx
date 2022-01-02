@@ -1,14 +1,30 @@
 import React, { useEffect, useState } from 'react'
 
-const Viewport = ({children, selectedKey, childSelector, breadcrumb}) => {
+const Viewport = ({selectedData, selectedKey, childSelector, breadcrumb, breadcrumbSelector}) => {
+    
+    const children = Object.keys(selectedData)
 
     useEffect(() => {
-        console.log('children', children)
     }, [children])
 
     const [showForm, setShowForm] = useState(false)
 
     const renderChildren = () => {
+        //Skips the brackets/judges child selector
+        if(children.includes("brackets") && children.includes("judges")){
+            childSelector("brackets")
+            return (<div></div>)
+        }
+
+        //This renders the video cards and disables the child selector
+        //TODO Add an onClick function like videoSelector to handle expanding a video
+        if(children.includes("embedUrl") && children.includes("reference")){
+            console.log("SELECTED DATA", selectedData)
+            return (
+                <iframe width="560" height="315" src={selectedData.embedUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            )
+        }
+
         return children.map((child) => {
             return (
                 <div className="viewport-carousel">
@@ -26,7 +42,9 @@ const Viewport = ({children, selectedKey, childSelector, breadcrumb}) => {
         return Object.entries(breadcrumb).map(([key, val]) => {
             if (val){
                 return (
-                    <li>{key}-->{val}</li>
+                    <li onClick={()=>{breadcrumbSelector(key); renderChildren()}}>
+                        {key}:{val}
+                    </li>
                 )
             }
         })

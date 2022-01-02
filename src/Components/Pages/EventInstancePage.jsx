@@ -20,8 +20,8 @@ const EventInstancePage = (props) => {
   const history = useHistory();
   // state for event instance
   const [selectedData, setSelectedData] = useState(null)
-  const [selectedKey, setSelectedKey] = useState(null)
-  const [breadcrumb, setBreadcrumb] = useState({style: '', category: '', bracket: ''})
+  const [selectedLevel, setSelectedLevel] = useState(null)
+  const [breadcrumb, setBreadcrumb] = useState({style: '', category: '', bracket: '', battle: ''})
 
   const getEventInstance = async (e) => {
     const db = firebase.firestore();
@@ -42,27 +42,78 @@ const EventInstancePage = (props) => {
     
   }, [eventInstanceId]);
   
+
+  //Sets the initial style, breadcrumb, and level data
   const styleSelector = (key) => {
     let selectedData = eventInstanceData.styles[key]
     
-    console.log(key, selectedData)
-    setSelectedKey(key)
+    setSelectedLevel("style")
     setSelectedData(selectedData)
-    setBreadcrumb({style: `${key}`, category: '', bracket: ''})
+    setBreadcrumb({style: `${key}`, category: '', bracket: '', battle: ''})
   }
 
+  //Sets the child next in the breadcrumb and moves the level down
+  //Levels = style -> category -> bracket -> battle
   const childSelector = (child) => {
 
-    console.log(child)
+    //Have to skip the brackets/judges extra level
+    if(child == "brackets"){
+      setSelectedData(selectedData[child])
+      return;
+    }
 
-    setSelectedKey(child)
     setSelectedData(selectedData[child])
-    setBreadcrumb((prev) => {
-      return {style: prev.style, category: child, bracket: ''}
-    })
+
+    if(selectedLevel == "style"){
+      setSelectedLevel("category")
+      setBreadcrumb((prev) => {
+        return {style: prev.style, category: child, bracket: '', battle: ''}
+      })
+
+    } else if(selectedLevel == "category"){
+      if(child != "brackets"){
+        setSelectedLevel("bracket")
+        setBreadcrumb((prev) => {
+          return {style: prev.style, category: prev.category, bracket: child, battle: ''}
+        })
+      }
+    } else if(selectedLevel == "bracket"){
+      setSelectedLevel("battle")
+      setBreadcrumb((prev) => {
+        return {style: prev.style, category: prev.category, bracket: prev.bracket, battle: child}
+      })
+    }
+
   }
   
-  
+  const breadcrumbSelector = (level) => {
+
+    if(level == "style"){
+      setSelectedLevel("style")
+      setSelectedData(eventInstanceData.styles[breadcrumb.style]);
+
+      setBreadcrumb((prev) => {
+        return {style: prev.style, category: '', bracket: '', battle: ''}
+      })
+
+    } else if(level == "category"){
+      setSelectedLevel("category")
+      setSelectedData(eventInstanceData.styles[breadcrumb.style][breadcrumb.category]);
+
+      setBreadcrumb((prev) => {
+        return {style: prev.style, category: prev.category, bracket: '', battle: ''}
+      })
+
+    } else if(level == "bracket"){
+      setSelectedLevel("bracket")
+      setSelectedData(eventInstanceData.styles[breadcrumb.style][breadcrumb.category].brackets[breadcrumb.bracket]);
+
+      setBreadcrumb((prev) => {
+        return {style: prev.style, category: prev.category, bracket: prev.bracket, battle: ''}
+      })
+    }
+
+  }
 
   const renderStyles = () => {
     let styles = eventInstanceData.styles 
@@ -75,11 +126,8 @@ const EventInstancePage = (props) => {
 
   }
 
-  const renderChildren = (params) => {
-    let children = Object.keys(selectedData)
-    console.log(selectedData)
-    
-    return (<Viewport children={children} selectedKey={selectedKey} breadcrumb={breadcrumb} childSelector={childSelector}/>)
+  const renderChildren = (params) => {    
+    return (<Viewport selectedData={selectedData} selectedLevel={selectedLevel} breadcrumb={breadcrumb} childSelector={childSelector} breadcrumbSelector={breadcrumbSelector}/>)
   }
   
   
