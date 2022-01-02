@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 const Viewport = ({children, selectedKey, childSelector, breadcrumb}) => {
-
+    
     useEffect(() => {
         console.log('children', children)
     }, [children])
@@ -9,6 +9,22 @@ const Viewport = ({children, selectedKey, childSelector, breadcrumb}) => {
     const [showForm, setShowForm] = useState(false)
 
     const renderChildren = () => {
+
+        //Skips the brackets/judges child selector
+        if(children.includes("brackets") && children.includes("judges")){
+            childSelector("brackets")
+            return (<div></div>)
+        }
+
+        //This renders the video cards and disables the child selector
+        //TODO Add an onClick function like videoSelector to handle expanding a video
+        if(breadcrumb.battle){
+            console.log(children)
+            return (
+                <div>VIDEO HERE</div>
+            )
+        }
+
         return children.map((child) => {
             return (
                 <div className="viewport-carousel">
