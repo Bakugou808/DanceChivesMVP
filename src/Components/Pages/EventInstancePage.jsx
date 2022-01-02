@@ -126,10 +126,8 @@ const EventInstancePage = (props) => {
 
   }
 
-  const renderChildren = (params) => {
-    let children = Object.keys(selectedData)
-    
-    return (<Viewport children={children} selectedLevel={selectedLevel} breadcrumb={breadcrumb} childSelector={childSelector} breadcrumbSelector={breadcrumbSelector}/>)
+  const renderChildren = (params) => {    
+    return (<Viewport selectedData={selectedData} selectedLevel={selectedLevel} breadcrumb={breadcrumb} childSelector={childSelector} breadcrumbSelector={breadcrumbSelector}/>)
   }
   
   

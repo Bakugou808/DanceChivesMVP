@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
-const Viewport = ({children, selectedKey, childSelector, breadcrumb, breadcrumbSelector}) => {
+const Viewport = ({selectedData, selectedKey, childSelector, breadcrumb, breadcrumbSelector}) => {
     
+    const children = Object.keys(selectedData)
+
     useEffect(() => {
-        console.log('children', children)
     }, [children])
 
     const [showForm, setShowForm] = useState(false)
@@ -17,10 +18,10 @@ const Viewport = ({children, selectedKey, childSelector, breadcrumb, breadcrumbS
 
         //This renders the video cards and disables the child selector
         //TODO Add an onClick function like videoSelector to handle expanding a video
-        if(breadcrumb.battle){
-            console.log(children)
+        if(children.includes("embedUrl") && children.includes("reference")){
+            console.log("SELECTED DATA", selectedData)
             return (
-                <div>VIDEO HERE</div>
+                <iframe width="560" height="315" src={selectedData.embedUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             )
         }
 
