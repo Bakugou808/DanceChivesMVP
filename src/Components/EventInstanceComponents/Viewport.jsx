@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
-const Viewport = ({selectedData, selectedKey, childSelector, breadcrumb, breadcrumbSelector}) => {
-    
+const Viewport = ({selectedData, childSelector, breadcrumb, breadcrumbSelector, info}) => {
+
     const children = Object.keys(selectedData)
 
     useEffect(() => {
@@ -21,7 +21,7 @@ const Viewport = ({selectedData, selectedKey, childSelector, breadcrumb, breadcr
         if(children.includes("embedUrl") && children.includes("reference")){
             console.log("SELECTED DATA", selectedData)
             return (
-                <iframe width="560" height="315" src={selectedData.embedUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="560" height="315" src={selectedData.embedUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             )
         }
 
@@ -49,15 +49,40 @@ const Viewport = ({selectedData, selectedKey, childSelector, breadcrumb, breadcr
             }
         })
     }
-    
-    
 
+    const renderInfo = () => {
 
+        let infoKeys = Object.keys(info)
+
+        if(infoKeys.includes("judges")){
+            return (<li>JUDGES: {info.judges}</li>)
+        }
+
+        // return Object.entries(info).map(([key, val]) => {
+        //     if(key == "judges"){
+        //         console.log("JUDGES", val);
+        //     }
+
+        //     if (val){
+        //         return (
+        //             <li>
+        //                 {key}:{val}
+        //             </li>
+        //         )
+        //     }
+        // })
+    }
+    
     return (
         <div className='viewport-wrapper'>
-            <ul className='viewport-breadcrumbs'>
-                {breadcrumb && renderBreadcrumb()}
-            </ul>
+            <div className='viewport-container'>
+                <ul className='viewport-breadcrumbs'>
+                    {breadcrumb && renderBreadcrumb()}
+                </ul>
+                <ul className='viewport-info'>
+                    {info && renderInfo()}
+                </ul>
+            </div>
             
             <section className='viewport-carousel-wrapper' >
                 {children && renderChildren()}
